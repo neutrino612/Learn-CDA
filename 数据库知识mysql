@@ -1,0 +1,75 @@
+MySQL5.7版本_安装
+开发者默认模式,无脑next
+本身就是root的管理权限
+add user-local host 本地---next---完毕
+
+
+进入workbench  即GUI界面
+数据库是数据存储的集合（Excel文件） 表是数据结构化的信息（sheet）
+主键是表中的唯一标识（例如：身份证）  主键不具备业务意义，以身份证来理解主键
+表的主键不做强制要求，但建议设立 主键值必须唯一 
+每行必须有一个主键，不可为空 
+主键值不可被修改 
+主键值被删除后不可重用 
+表A的主键，可以做为表B的字段，此时不受约束
+
+
+数据库的类型
+schema（发音 “skee-muh” ，中文叫模式）是数据库的组织和结构，小库的概念
+create a new schema   utf-8
+Tables--create table
+将本地的Excel-company表的列复制粘贴列进去
+点击company表左侧的第三个小图标
+插入行，乱码  是因为编码方式不一致，，原Excel表可以另存为utf-8的csv
+删除行的标志  
+
+
+
+
+
+*是通配符————————select * from 
+order by 按照什么排序   
+where   过滤，通过某个字符
+and   or的逻辑或与
+group by having按照某个分组
+count(*)，count(1）
+having count(  )
+left(某个字段，第几个字符)
+locate("k",salary)
+substr(字符串，从哪里开始，截取长度)，与locate ，length组合使用
+
+select嵌套select
+进行数据清洗
+select case  when    end
+join  多表vlookup关联  on
+某个表，as 一个别名
+
+leatcode
+牛客网站
+
+load data   local infile
+
+
+时间部分：
+时间操作
+now函数
+date函数  年月日
+date_format函数(paidTime,‘%Y-%m’)，特定格式
+
+统计学部分：
+median()中位数
+mode()出现次数越多众数
+四分位数，四等分
+quartile(求组，01234)
+二八法则20%
+方差数据的离散程度
+
+标准差是将方差消除的量纲恢复，有业务意义
+数据标准化，平均数和方差的组合
+为什么要进行标准化
+消除量纲的差异，可以直接进行对比
+weeknum和weekday函数
+
+权重预估，在标准化基础上
+切比雪夫定理
+异常值检测
