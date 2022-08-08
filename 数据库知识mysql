@@ -28,20 +28,83 @@ Tables--create table
 
 
 *是通配符————————select * from 
-order by 按照什么排序   
+order by 按照什么排序   desc降序  
 where   过滤，通过某个字符
 and   or的逻辑或与
 group by having按照某个分组
 count(*)，count(1）
-having count(  )
+针对分组后的结果进行过滤 having count(  )and   进行多重过滤   count（if(条件,1,null)）
 left(某个字段，第几个字符)
-locate("k",salary)
+locate("k",salary),组合应用   
+    left(salary,locate('k',salary)-1)
 substr(字符串，从哪里开始，截取长度)，与locate ，length组合使用
-
+    SELECT left(salary,locate('k',salary)-1) as bottom,
+    substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+    salary 
+    from data.dataanalyst;但这是一个临时表，可以把它当做一个别名
 select嵌套select
+    select * from(
+    SELECT left(salary,locate('k',salary)-1) as bottom,
+    substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+    salary 
+    from data.dataanalyst) as t;
+
+    select (bottom+top)/2,salary from(
+    SELECT left(salary,locate('k',salary)-1) as bottom,
+    substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+    salary 
+    from data.dataanalyst) as t;
+
 进行数据清洗
 select case  when    end
+        select 
+            case 
+                when (bottom+top)/2<= 10 then "0~10"
+                when (bottom+top)/2<= 20 then "10~20"
+                when (bottom+top)/2<= 30 then "20~30"
+                else '30+'
+            end,
+        salary from(
+        SELECT left(salary,locate('k',salary)-1) as bottom,
+        substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+        salary 
+        from data.dataanalyst) as t;
+
+想要分组过滤条件后的明细数据，就是一种子查询，让条件后的数据为过滤查询条件 where  in（）
+    select * from data.dataanalyst
+    where city in
+    (
+    select city from data.dataanalyst
+    group by city having count(positionId)>=100
+    )
+
+
+
+两张表之间查询  where  和select  的字段一定要一样
+例如：
+    select * from data.dataanalyst
+    where companyId=(
+    select companyId from data.company
+    where companyShortName='唯医网')
+
+
 join  多表vlookup关联  on
+    select * from data.dataanalyst
+    inner 
+    join data.company on dataanalyst.companyId=company.companyID
+
+别名的方法：
+    select * from data.dataanalyst as da
+    join data.company as c on da.companyId=c.companyID
+
+
+left join  比inner join 的范围小，会产生关联不上的结果
+    select * from data.dataanalyst as d
+    left join(
+    SELECT * FROM data.company
+    where companySize='150-500人') as t
+    on t.companyId = d.companyID
+
 某个表，as 一个别名
 
 leatcode

@@ -1,0 +1,37 @@
+想要分组过滤条件后的明细数据，就是一种子查询，让条件后的数据为过滤查询条件 where  in（）
+    select * from data.dataanalyst
+    where city in
+    (
+    select city from data.dataanalyst
+    group by city having count(positionId)>=100
+    )
+
+数据的拆分10k-20k，这种范围数据
+    select * from(
+    SELECT left(salary,locate('k',salary)-1) as bottom,
+    substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+    salary 
+    from data.dataanalyst) as t;
+
+    select (bottom+top)/2,salary from(
+    SELECT left(salary,locate('k',salary)-1) as bottom,
+    substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+    salary 
+    from data.dataanalyst) as t;
+
+将数据添加分组
+    select case  when    end
+        select 
+            case 
+                when (bottom+top)/2<= 10 then "0~10"
+                when (bottom+top)/2<= 20 then "10~20"
+                when (bottom+top)/2<= 30 then "20~30"
+                else '30+'
+            end,
+        salary from(
+        SELECT left(salary,locate('k',salary)-1) as bottom,
+        substr(salary,locate('-',salary)+1,length(salary)-locate('-',salary)-1) as top,
+        salary 
+        from data.dataanalyst) as t;
+
+
