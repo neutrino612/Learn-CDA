@@ -1,0 +1,11 @@
+1、数据分析的操作对象：内部操作对象+外部操作对象（Windows  PPT  Visio）
+单元格cell的父级对象是表，表sheet的父级对象是工作簿，工作簿workbook的父级对象是文件等，文件Excel file的父级对象是application。
+
+2、Excel掌握  基本功能+powerBI +高级图表绘制+公式功能+VBA功能（Excel的一个程序软件，录制宏技巧）
+
+3、power BI  包含 power map(地图工具)power view （仪表盘）power query(数据处理，Excel界面) power PIVOT(透视工具，Excel界面)
+
+4、power query  获取导入外部数据；
+   power query  加工清理数据
+   power pivot  搭建多维数据集
+   power map，view与Excel界面
