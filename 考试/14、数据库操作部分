@@ -33,7 +33,24 @@ create table emp(
 整数型数值类型    INT    TINYINT  SMALLINT   MEDIUMINT   BIGINT
 小数型   FLOAT 4字节   DOUBLE  8字节
 日期时间型：  DATE  YYYY-MM-DD          DATETIME:YYYY-MM-DD  HH:MM:SS格式
+            TIME:HH:MM:SS格式      TIMESTAMP:时间戳
+字符串类型：CHAR(M)固定长度字符串，需要补位   VARCHAR()可变字符串，定义时必须指定长度L+1（1是用来存储长度的）
+            所以挑选这两种要考虑存储空间的问题
 
+
+11、约束条件
+表上强制执行的数据检验规则，用来保证创建的表的数据的完整与正确
+
+mysql  常用的约束条件
+（1）主键约束 PRIMARY KEY:表中每行记录不重复；也叫主码（主键列数据唯一非空），可加快查询速度
+有单主键     多字段联合主键
+（2）非空约束  NOT NULL
+字段值不能有空值
+（3）唯一约束 UNIQUE
+该列值唯一，不能重复；可以有空值，空值只能出现一次
+（4）自增约束 AUTO_INCREMENT
+（5）默认值 DEFAULT
+当插入记录时，如果没有明确为字段赋值，系统就会自动为这个字段赋值来默认约束设定的值
 
 
 
