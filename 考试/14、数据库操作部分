@@ -2,3 +2,38 @@
 
 2、操作关系型数据库使用的语言  叫  结构化查询语言——SQL结构化查询语言
 
+3、创建数据库;    create database test
+4、查看创建好的数据库; show create database test
+5、查看所有数据库列表; show databases
+6、使用数据库; use test
+7、删除数据库; drop database test
+8、SCHEMAS中的sys——tables   系统数据库中的数据表
+
+9、数据表：数据库由许多数据表构成；每个数据表存储多个字段；每个字段由不同的字段名及记录构成，每个字段有自己的数据结构及约束条件
+例如：商品颜色表  GoodsColor
+
+
+(1)使用库 ; use test
+(2)创建数据表   
+create table emp(
+                                        depid char(3),
+                                        depname varchar(20),
+                                        peoplecount int
+);
+(3)查看表是否创建成功; show tables
+(4)删除数据表; drop table emp
+
+10、数据类型：就是为字段上了一把锁，保证字段的完整性与准确性
+位：电子计算机中的最小的数据单位，每一位的状态只能是0或者1
+字节：8个二进制位构成1个字节（byte）,它是存储空间的基本计量单位
+数据类型：不同的数据类型具有不容的字节长度。字节长度越长能取值的数值空间也就越大。
+
+一个INT整数型数据占用四个字节长度，有符号大小  即 8*4=32位
+
+整数型数值类型    INT    TINYINT  SMALLINT   MEDIUMINT   BIGINT
+小数型   FLOAT 4字节   DOUBLE  8字节
+日期时间型：  DATE  YYYY-MM-DD          DATETIME:YYYY-MM-DD  HH:MM:SS格式
+
+
+
+
