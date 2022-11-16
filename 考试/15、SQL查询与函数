@@ -1,0 +1,32 @@
+1、SQL语句的操作符
+
+算术操作符：+  -  * /
+比较操作符：=     >     <      <=      >=      !=      <>      !>      !<   9种
+
+
+2、聚合类函数：针对一组数进行汇总求和的函数
+
+AVG:按列计算平均值
+SUM：按列计算值的总和
+MAX：求一列中的最大值
+MIN:   求一列中的最小值
+COUNT:按列值计个数
+
+3、SQL查询
+SELECT语句语法
+（1）单表查询
+SELECT   (目标列组)
+    FROM <数据源>
+    [WHERE <元组选择条件>]
+    [GROUP BY <分列组>[HAVING <组选择条件>]]
+    [DRDER BY <排序列1>  <排序要求1>  [,...n]];
+
+示例：
+select city_name ,avg(pm25),avg(pm10)
+        from Monthly_indicator
+        where pm25>50
+        group by city_name,month_key having city_name<>'北京'
+        order by avg(pm25) desc;降序排序   asc升序
+        
+
+

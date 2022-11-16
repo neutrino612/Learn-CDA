@@ -49,8 +49,65 @@ mysql  常用的约束条件
 （3）唯一约束 UNIQUE
 该列值唯一，不能重复；可以有空值，空值只能出现一次
 （4）自增约束 AUTO_INCREMENT
+每个表只有一个自增字段，自增字段必须为主键的一部分，默认情况下从1 开始自增
 （5）默认值 DEFAULT
 当插入记录时，如果没有明确为字段赋值，系统就会自动为这个字段赋值来默认约束设定的值
+
+示例：
+CREATE TABLE example(id INT PRIMARY KEY AUTO_INCREMENT
+                                        name VARCHAR(4) NOT NULL
+                                        math INT DEFAULT 0
+                                        minmax FLOAT UNIQUE 
+
+)
+
+desc  example(description说明书、描述形容；查看表结构的命令)
+
+12、数据填充
+（1）insert into  向表插入数据
+insert  into 表名（表的字段）
+values('字段对应的值')，（），（）；    多行的值
+
+（2）load   into 方式
+示例：
+第一，先创建表以及相关的字段
+第二，导入外部文本文件
+load data local infile'文件路径.txt'
+into table Monthly_indicator
+fields terminated by'\t'             设定导入文本文件的分隔符
+ignore 1 lines        忽略第一行（字段名），从第二行开始
+
+（2）检查
+检查导入内容：
+select * from Monthly_indicator;
+
+检查导入数据总行数：
+select count(*)from Monthly_indicator;
+
+检查表结构：
+desc Monthly_indicator;
+
+
+13、修改数据表结构
+修改数据库中已经存在的数据表的结构
+MySQL中使用alter table 修改数据表结构（表名、字段数据类型、字段名、增加和删除字段、修改字段排列位置）
+alter table emp rename empdep
+alter table empdep modify depname varchar(30)
+alter table empdep change depname dep varchar(30)
+alter table empdep change dep depname varchar(20)
+alter table empdep add maname varchar(10) not null 
+alter table empdep modify maname varchar(10) first 修改排列顺序第一位
+alter table empdep mpdify maname varchar(10) after depid;
+alter table empdep drop maname;
+
+
+
+
+
+
+
+
+
 
 
 
