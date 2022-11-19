@@ -14,7 +14,7 @@ LENGTH（str）:返回字符串str中的字符数
 
 
 3、日期及时间函数
-NOW（）：返回当前的日期和函数
+NOW（）：返回当前的日期和时间
 DATE（datetime）:返回datetime 的日期值
 TIME（datetime）:返回datetime 的时间值
 

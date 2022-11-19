@@ -1,3 +1,6 @@
+http://localhost:8889/notebooks/%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E6%A1%88%E4%BE%8B.ipynb
+
+本地的py文件:
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
