@@ -1,0 +1,13 @@
+1、cmd中，输入  Jupyter lab
+或者
+2、anaconda  中打开找到接口，jupyter lab  或者jupyter notebook
+3、在jupyter中
+安装几个包，或者已经存在
+import pandas as pd
+import numpy as np
+import sklearn
+import matplotlib as mlp
+import scipy
+
+4、安装graphviz   
+mis文件

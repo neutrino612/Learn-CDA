@@ -1,0 +1,35 @@
+1、常用的数学函数：
+ABS（x）：返回绝对值
+LOG（x,y）:返回x的以y为底的对数
+MOD（x,y）：返回x/y的模（余数）
+RAND（）：返回0到1内的随机值，可以通过提供一个参数（种子）使RAND（）随机数生成器生成一个指定的值
+CEILING（x）：返回大于x的最小整数值（进一整数）
+ROUND（x,y）：返回参数x的四舍五入的有y位小数的值
+
+2、字符串函数
+CONCAT（s1,s2...,sn）:将s1,s2,...sn连接成字符串
+LEFT（str,x）:返回字符串str中最左边的x个字符
+RIGHT（str,x）:返回字符串str中最右边的x个字符
+LENGTH（str）:返回字符串str中的字符数
+
+
+3、日期及时间函数
+NOW（）：返回当前的日期和时间
+DATE（datetime）:返回datetime 的日期值
+TIME（datetime）:返回datetime 的时间值
+
+
+
+4、其他函数
+GROUP_CONCAT（col）:返回由属于一组的列值连接组合而成的结果
+CAST（）：将一个值转换为指定的数据类型
+SELECT s_id,GROUP_CONCAT（f_name）FROM fruits GROUP BY s_id;
+
+update  ...set：为字段赋值，语法为update  表名   set   字段名=值；
+例子：使用concat函数在f_name字段值前添加”fruit_“信息
+update fruits set f_name=concat('fruit_',f_name)
+
+
+
+delete:删除数据表中的数据
+delete from fruits where f_id='b5'

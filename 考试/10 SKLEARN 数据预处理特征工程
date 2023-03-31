@@ -1,0 +1,158 @@
+数据不给力，再高级的算法都没有用。
+
+因为现实中的数据，离平时上课使用的完美数据集，相差十万八千里
+
+1、数据挖掘的五大流程：
+（1）获取数据
+（2）数据预处理
+数据预处理是从数据中检测，纠正或删除损坏，不准确或不适用于模型的记录的过程 
+可能面对的问题有：数据类型不同，比如有的是文字，有的是数字，有的含时间序列，有的连续，有的间断。
+也可能，数据的质量不行，有噪声，有异常，有缺失，数据出错，量纲不一，有重复，数据是偏态，数据量太
+大或太小
+数据预处理的目的：让数据适应模型，匹配模型的需求
+（3）特征工程：
+特征工程是将原始数据转换为更能代表预测模型的潜在问题的特征的过程，可以通过挑选   
+最相关的特征，提取特征    以及    创造特征     来实现。其中创造特征又经常以降维算法的方式实现。
+可能面对的问题有：
+特征之间有相关性，特征和标签无关，特征太多或太小，或者干脆就无法表现出应有的数据现象或无法展示数据的真实面貌
+特征工程的目的：1) 降低计算成本，2) 提升模型上限
+（4） 建模，测试模型并预测出结果
+（5）上线，验证模型效果
+
+2、 sklearn中的数据预处理和特征工程
+
+模块preprocessing：几乎包含数据预处理的所有内容
+模块Impute：填补缺失值专用
+模块feature_selection：包含特征选择的各种方法的实践
+模块decomposition：包含降维算法
+
+
+3、数据预处理Preprocessing & Impute
+3-1、数据无量纲化
+着将不同规格的数据转换到同一规格，或不同分布的数据转换到某个特定分布的需求，这种需求统称为将数据“无量纲化”。
+
+
+数据的无量纲化可以是线性的，也可以是非线性的。
+线性的无量纲化包括中心化（Zero-centered或者Meansubtraction）处理和缩放处理（Scale）。
+
+去中心化：中心化的本质是让所有记录减去一个固定值，即让数据样本数据平移到某个位置。
+缩放：缩放的本质是通过除以一个固定值，将数据固定在某个范围之中，取对数也算是一种缩放处理。
+
+3-1-1、preprocessing.MinMaxScaler
+当数据(x)按照最小值中心化后，再按极差（最大值 - 最小值）缩放，数据移动了最小值个单位，并且会被收敛到[0,1]之间，而这个过程，就叫做数据归一化(Normalization，又称Min-Max Scaling)
+
+该模块的参数：
+（1）feature_range控制我们希望把数据压缩到的范围，默认是[0,1]
+
+（2）BONUS: 使用numpy来实现归一化
+
+3-1-2、preprocessing.StandardScaler
+当数据(x)按均值(μ)中心化后，再按标准差(σ)缩放，数据就会服从为均值为0，方差为1的正态分布（即标准正态分布），而这个过程，就叫做数据标准化(Standardization，又称Z-score normalization)
+
+from sklearn.preprocessing import StandardScaler
+data = [[-1, 2], [-0.5, 6], [0, 10], [1, 18]]
+scaler = StandardScaler()
+scaler.fit_transform(data) #使用fit_transform(data)一步达成结果
+scaler.inverse_transform(x_std) #使用inverse_transform逆转标准化
+
+3-1-3、StandardScaler和MinMaxScaler选哪个？
+大多数机器学习算法中，会选择StandardScaler来进行特征缩放，因为MinMaxScaler对异常值非常敏感。
+
+3-2、缺失值
+以泰坦尼克号提取出来的数据为例子，这个数据有三个特征，一个数值型，两个字符型，标签也是字符型。
+
+3-2-1、impute.SimpleImputer  填补缺失值
+
+sklearn.impute.SimpleImputer (missing_values=nan, strategy=’mean’, fill_value=None, verbose=0,copy=True)
+四个参数：缺失值长什么样子类型，填补缺失值的策略
+
+data.info()
+#填补年龄
+Age = data.loc[:,"Age"].values.reshape(-1,1) #sklearn当中特征矩阵必须是二维
+Age[:20]
+from sklearn.impute import SimpleImputer
+imp_mean = SimpleImputer() #实例化，默认均值填补
+imp_median = SimpleImputer(strategy="median") #用中位数填补
+imp_0 = SimpleImputer(strategy="constant",fill_value=0) #用0填补
+imp_mean = imp_mean.fit_transform(Age) #fit_transform一步完成调取结果
+imp_median = imp_median.fit_transform(Age)
+imp_0 = imp_0.fit_transform(Age)
+
+3-2-2、BONUS：用Pandas和Numpy进行填补其实更加简单
+import pandas as pd
+data = pd.read_csv(r"C:\work\learnbetter\micro-class\week 3 
+Preprocessing\Narrativedata.csv",index_col=0)
+data.head()
+data.loc[:,"Age"] = data.loc[:,"Age"].fillna(data.loc[:,"Age"].median())
+#.fillna 在DataFrame里面直接进行填补
+data.dropna(axis=0,inplace=True)
+#.dropna(axis=0)删除所有有缺失值的行，.dropna(axis=1)删除所有有缺失值的列
+#参数inplace，为True表示在原数据集上进行修改，为False表示生成一个复制对象，不修改原数据，默认False
+
+3-3、处理分类型特征：编码与哑变量
+在sklearn当中，除了专用来处理文字的算法，其他算法在fit的时候全部要求输入数组或矩阵，也不能够导入文字型数据（其实手写决策树和普斯贝叶斯可以处理文字，但是sklearn中规定必须导入数值型）
+
+比如说，学历的取值可以是["小 学"，“初中”，“高中”，"大学"]，付费方式可能包含["支付宝"，“现金”，“微信”]等等。在这种情况下，为了让数据适
+应算法和库，我们必须将数据进行编码，即是说，将文字型数据转换为数值型。
+
+3-3-1、preprocessing.LabelEncoder：标签专用，能够将分类转换为分类数值
+
+from sklearn.preprocessing import LabelEncoder
+y = data.iloc[:,-1] #要输入的是标签，不是特征矩阵，所以允许一维
+le = LabelEncoder() #实例化
+le.fit_transform(y) #也可以直接fit_transform一步到位
+le.inverse_transform(label) #使用inverse_transform可以逆转
+
+
+3-3-2、preprocessing.OrdinalEncoder：特征专用，能够将分类特征转换为分类数值
+
+from sklearn.preprocessing import OrdinalEncoder
+
+3-3-3、preprocessing.OneHotEncoder：独热编码，创建哑变量
+
+三种不同性质的分类数据：名义变量、有序变量、有距变量
+1） 舱门（S，C，Q）
+三种取值S，C，Q是相互独立的，彼此之间完全没有联系，表达的是S≠C≠Q的概念。这是名义变量。
+2） 学历（小学，初中，高中）
+三种取值不是完全独立的，我们可以明显看出，在性质上可以有高中>初中>小学这样的联系，学历有高低，但是学
+历取值之间却不是可以计算的，我们不能说小学 + 某个取值 = 初中。这是有序变量。
+3） 体重（>45kg，>90kg，>135kg）
+各个取值之间有联系，且是可以互相计算的，比如120kg - 45kg = 90kg，分类之间可以通过数学计算互相转换。这
+是有距变量。
+
+3-3-4、类别OrdinalEncoder可以用来处理有序变量，但对于名义变量，我们只有使用哑变量的方式来处理，才能够尽量
+向算法传达最准确的信息：[0,1,2]变成[1,0,0 ; 0,1,0 ; 0,0,1]
+3-3-5、使用类sklearn.preprocessing.LabelBinarizer可以对标签做哑变量
+
+3-3-6、BONUS：数据类型以及常用的统计量
+
+
+3-4、 处理连续型特征：二值化与分段
+
+3-4-1、sklearn.preprocessing.Binarizer
+根据阈值将数据二值化（将特征值设置为0或1），用于处理连续型变量。大于阈值的值映射为1，而小于或等于阈值的值映射为0
+二值化是对文本计数数据的常见操作，分析人员可以决定仅考虑某种现象的存在与否
+
+3-4-2、preprocessing.KBinsDiscretizer
+这是将连续型变量划分为分类变量的类，能够将连续型变量排序后按顺序分箱后编码   
+几个参数:
+(1)n_bins 每个特征中分箱的个数，默认5，一次会被运用到所有导入的特征
+(2)encode   编码的方式，默认“onehot” 
+"onehot"：做哑变量，之后返回一个稀疏矩阵，每一列是一个特征中的一个类别，含有该
+类别的样本表示为1，不含的表示为0 
+“ordinal”：每个特征的每个箱都被编码为一个整数，返回每一列是一个特征，每个特征下含
+有不同整数编码的箱的矩阵
+"onehot-dense"：做哑变量，之后返回一个密集数组。
+(3)strategy:
+用来定义箱宽的方式，默认"quantile" 
+"uniform"：表示等宽分箱，即每个特征中的每个箱的最大值之间的差为
+(特征.max() - 特征.min())/(n_bins) 
+"quantile"：表示等位分箱，即每个特征中的每个箱内的样本数量都相同
+"kmeans"：表示按聚类分箱，每个箱中的值到最近的一维k均值聚类的簇心得距离都相同
+
+
+
+
+
+
+

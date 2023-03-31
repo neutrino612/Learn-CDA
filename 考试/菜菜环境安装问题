@@ -1,0 +1,42 @@
+1、在anaconda中的jupyterlab导入模块
+
+
+import pandas as pd;
+import numpy as np;
+import sklearn;
+import matplotlib as mlp;
+import scipy;
+
+2
+module = [pd,np,sklearn,mlp,scipy]
+name =['pandas','numpy','sklearn','matplotlib','scipy']
+for name,item in zip(name,module):
+    print("{}:{}".format(name,item.__version__))
+
+注意:__version__  是两个下划线  ,一个下划线是报错的
+
+3  安装graphviz   但是导入的时候报错NameError: name 'graphviz' is not defined
+查到的解决方案
+https://blog.csdn.net/weixin_45361362/article/details/121350501
+
+
+cmd中进入python  python并未成功激活发现有两个环境  应该激活base  的conda的环境
+cmd控制台输入：conda env list，查看自己的环境，base是系统环境
+conda activate+环境名称，之后再输入python即为激活成功
+
+仍旧报错:
+Warning:
+This Python interpreter is in a conda environment, but the environment has
+not been activated.  Libraries may fail to load.  To activate this environment
+please see https://conda.io/activation
+
+https://blog.csdn.net/u012942705/article/details/121741953
+
+
+4
+最近在Windows下使用Anaconda时遇到了'CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'错误，错误显示如下：
+conda init cmd.exe
+https://blog.csdn.net/u012942705/article/details/121741953
+
+
+
