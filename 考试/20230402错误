@@ -58,4 +58,7 @@ SELECT  CONCAT _WS('，'，lastName，firstname) [AS] 'Full name'  FROM employee
 
 10、between  and  是包含边界值的
 
-11、
+11、数据库存储层级自上而下分别是数据库、数据表、字段，字段是最小存储单位。
+        存储在数据库中的行和列的交叉处的数据称为值，它是数据库中最基本的存储单元，其位置由该表中的记录和字段定义
+
+12、连接查询也叫横向查询 join    联合查询也叫纵向查询  union 
