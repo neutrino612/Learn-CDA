@@ -32,7 +32,7 @@ select city_name ,avg(pm25),avg(pm10)
 思考诀窍：group by  按照和数据透视表理解，行标签选择  城市、月份，值为avg(pm25),avg(pm10)；聚合函数为值的汇总规则
 
 3-2   多表查询
-将两个以上的数据表通过关键字段连接在一起，并从不同表中取不同子弹进行查询的方法
+将两个以上的数据表通过关键字段连接在一起，并从不同表中取不同字段进行查询的方法
 关键字段：用来连接两表的内容信息能够匹配的上的字段
 a.相连的两表中都需要有关键字段
 b.关键字段中的记录信息能够匹配的上
@@ -84,7 +84,7 @@ select * from fruits where f_name in ('apple','orange')
 select * from fruits where f_name not in ('apple','orange')
 
 BETWEEN:判断某个字段的值是否在指定的范围内，如果在则满足查询条件，如果不在则不满足查询条件
-select * from fruits where f_price between 10   and  20;
+select * from fruits where f_price between 10   and  20;   包含边界值
 
 LIKE：用来匹配字符串是否相等，如果字段的值与指定的字符串相匹配，则满足查询条件，如果与指定的字符串不匹配，则不满足查询条件
 not like '字符串'   字符串可以是有%或者_的通配符
